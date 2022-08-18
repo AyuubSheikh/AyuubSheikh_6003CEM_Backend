@@ -1,0 +1,506 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Your Local Gym API
+host: 'localhost:4000'
+tags:
+  - name: user
+    description: Operations about Users
+  - name: class
+    description: Operations about Classes
+  - name: message
+    description: Operations about Messages
+schemes:
+  - http
+  - https
+paths:
+  /users/signup:
+    post:
+      tags:
+        - user
+      summary: Signup for new users, returns the user information.
+      description: Signup for new users, returns the user information.
+      operationId: users-signup
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Bad request - invalid data provided
+        '500':
+          description: Internal server error
+      parameters:
+        - in: body
+          name: body
+          description: Request body parameters required as JSON object
+          required: true
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              address:
+                type: string
+              email:
+                type: string
+              password:
+                type: string
+              goal:
+                type: string
+              experienced:
+                type: string
+              history:
+                type: string
+              paymentNumber:
+                type: string
+              paymentTitle:
+                type: string
+              paymentCvv:
+                type: string
+  /users/login:
+    post:
+      tags:
+        - user
+      summary: Verifies user's credentials and returns the user information.
+      description: Verifies user's credentials and returns the user information.
+      operationId: users-login
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Bad request - invalid data provided
+        '500':
+          description: Internal server error
+      parameters:
+        - in: body
+          name: body
+          description: Request body parameters required as JSON object
+          required: true
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+  /users/approve:
+    get:
+      tags:
+        - user
+      summary: Activate a user account.
+      description: Activate a user account.
+      operationId: users-active
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Bad request - invalid data provided
+        '500':
+          description: Internal server error
+      parameters:
+        - in: path
+          type: string
+          name: userId
+          description: ID of the User that you want to approve.
+          required: true
+  /users/up:
+    post:
+      tags:
+        - user
+      summary: Update password for a user.
+      description: Update password for a user.
+      operationId: update-password
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Bad request - invalid data provided
+        '500':
+          description: Internal server error
+      parameters:
+        - in: body
+          name: body
+          description: Request body parameters required as JSON object
+          required: true
+          schema:
+            type: object
+            properties:
+              password:
+                type: string
+        - in: path
+          type: string
+          name: userId
+          description: ID of the User that you want to approve.
+          required: true
+  /users/update:
+    post:
+      tags:
+        - user
+      summary: Update basic information for a logged in user.
+      description: Update basic information for a logged in user.
+      operationId: users-update
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Bad request - invalid data provided
+        '500':
+          description: Internal server error
+      parameters:
+        - in: body
+          name: body
+          description: Request body parameters required as JSON object
+          required: true
+          schema:
+            type: object
+            properties:
+              _id:
+                type: string
+              name:
+                type: string
+              address:
+                type: string
+              email:
+                type: string
+              password:
+                type: string
+              goal:
+                type: string
+              experienced:
+                type: string
+              history:
+                type: string
+              paymentNumber:
+                type: string
+              paymentTitle:
+                type: string
+              paymentCvv:
+                type: string
+              file:
+                type: object
+  /users/requests:
+    post:
+      tags:
+        - user
+      summary: Get newly received signup requests.
+      description: Get newly received signup requests.
+      operationId: users-requests
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Bad request - invalid data provided
+        '500':
+          description: Internal server error
+  /users/:
+    delete:
+      tags:
+        - user
+      summary: Delete a user.
+      description: Delete a user.
+      operationId: users-change-password
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Bad request - invalid data provided
+        '500':
+          description: Internal server error
+      parameters:
+        - in: path
+          type: string
+          name: userId
+          description: ID of the User that you want to delete.
+          required: true
+  /classes:
+    post:
+        tags:
+          - class
+        summary: Create new class.
+        description: Create new class.
+        operationId: class-new
+        produces:
+          - application/json
+        responses:
+          '200':
+            description: Successful operation
+          '400':
+            description: Bad request - invalid data provided
+          '500':
+            description: Internal server error
+        parameters:
+          - in: body
+            name: body
+            description: Request body parameters required as JSON object
+            required: true
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                description:
+                  type: string
+  /classes/update:
+    post:
+        tags:
+          - class
+        summary: Update an existing class.
+        description: Update an existing class.
+        operationId: class-update
+        produces:
+          - application/json
+        responses:
+          '200':
+            description: Successful operation
+          '400':
+            description: Bad request - invalid data provided
+          '500':
+            description: Internal server error
+        parameters:
+          - in: body
+            name: body
+            description: Request body parameters required as JSON object
+            required: true
+            schema:
+              type: object
+              properties:
+                  title:
+                    type: string
+                  description:
+                    type: string
+          - in: path
+            type: string
+            name: classId
+            description: ID of the Class that you want to update.
+            required: true
+  /classes/find:
+    post:
+        tags:
+          - class
+        summary: Get all classes matching to a keyword.
+        description: Get all classes matching to a keyword.
+        operationId: class-find
+        produces:
+          - application/json
+        responses:
+          '200':
+            description: Successful operation
+          '400':
+            description: Bad request - invalid data provided
+          '500':
+            description: Internal server error
+        parameters:
+          - in: body
+            name: body
+            description: Request body parameters required as JSON object
+            required: true
+            schema:
+              type: object
+              properties:
+                  keyword:
+                    type: string
+  /classes/:
+    delete:
+      tags:
+        - class
+      summary: Delete a class.
+      description: Delete a class.
+      operationId: class-delete
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Bad request - invalid data provided
+        '500':
+          description: Internal server error
+      parameters:
+        - in: path
+          type: string
+          name: classId
+          description: ID of the Class that you want to delete.
+          required: true
+  /messages:
+    post:
+        tags:
+          - message
+        summary: Create new message.
+        description: Create new message.
+        operationId: message-new
+        produces:
+          - application/json
+        responses:
+          '200':
+            description: Successful operation
+          '400':
+            description: Bad request - invalid data provided
+          '500':
+            description: Internal server error
+        parameters:
+          - in: body
+            name: body
+            description: Request body parameters required as JSON object
+            required: true
+            schema:
+              type: object
+              properties:
+                senderId:
+                  type: string
+                message:
+                  type: string
+                date:
+                  type: string
+  /messages/reply:
+    post:
+        tags:
+          - message
+        summary: Updates a message and add its reply.
+        description: Updates a message and add its reply.
+        operationId: message-reply
+        produces:
+          - application/json
+        responses:
+          '200':
+            description: Successful operation
+          '400':
+            description: Bad request - invalid data provided
+          '500':
+            description: Internal server error
+        parameters:
+          - in: body
+            name: body
+            description: Request body parameters required as JSON object
+            required: true
+            schema:
+              type: object
+              properties:
+                messageId:
+                  type: string
+                reply:
+                  type: string
+                dateReplied:
+                  type: string
+                repliedBy:
+                  type: string
+  /messages/:
+    get:
+        tags:
+          - message
+        summary: Get list of all new messages.
+        description: Get list of all new messages.
+        operationId: message-list
+        produces:
+          - application/json
+        responses:
+          '200':
+            description: Successful operation
+          '400':
+            description: Bad request - invalid data provided
+          '500':
+            description: Internal server error
+  /messages/history:
+    get:
+        tags:
+          - message
+        summary: Get list of all messages with replies.
+        description: Get list of all messages with replies.
+        operationId: message-history
+        produces:
+          - application/json
+        responses:
+          '200':
+            description: Successful operation
+          '400':
+            description: Bad request - invalid data provided
+          '500':
+            description: Internal server error
+definitions:
+  User:
+    type: object
+    properties:
+      name:
+        type: string
+      address:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      active:
+        type: boolean
+      goal:
+        type: string
+      experienced:
+        type: string
+      history:
+        type: string
+      pictureId:
+        type: string
+      type:
+        type: number
+      paymentNumber:
+        type: string
+      paymentTitle:
+        type: string
+      paymentCvv:
+        type: string
+    required:
+      - name
+      - address
+      - email
+      - password
+      - active
+      - type
+    xml:
+      name: user
+
+  Class:
+    type: object
+    properties:
+      title:
+        type: string
+      description:
+        type: string
+    required:
+      - title
+      - description
+    xml:
+      name: class
+
+  Message:
+    type: object
+    properties:
+      senderId:
+        type: string
+      message:
+        type: string
+      date:
+        type: string
+      status:
+        type: boolean
+      reply:
+        type: string
+      dateReplied:
+        type: string
+      repliedBy:
+        type: string
+    required:
+      - senderId
+      - message
+      - date
+    xml:
+      name: message
